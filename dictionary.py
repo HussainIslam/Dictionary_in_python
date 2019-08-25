@@ -17,7 +17,7 @@ def menuInput(wordList):
     if choice < 0 or choice > len(wordList):
       raise IndexError('Choice entered does not exists. Enter a valid choice.')
     choice = wordList[choice]
-  except TypeError:
+  except ValueError:
     try:
       choice = checkList(wordList, choice)
     except KeyError:
@@ -25,6 +25,8 @@ def menuInput(wordList):
   return choice
 
 def closeMatchMenu(wordList):
+  if len(wordList) == 0:
+    raise Exception()
   counter = 1
   for i in wordList:
     print(f'{counter}: {i}')
@@ -37,7 +39,7 @@ def checkKey(dict, word):
     checkList(dict.keys(), word)
     value = dict[word]
   except KeyError:
-    raise KeyError('Key not found in the dictionary')
+    raise KeyError()
   return value
 
 def checkList(lst, word):
@@ -46,7 +48,7 @@ def checkList(lst, word):
     if i.lower() == word.lower():
       value = i
   if value == '':
-    raise KeyError('Key not found in the list')
+    raise KeyError()
   return value
 
 def definition(dict, word):
@@ -58,8 +60,8 @@ def definition(dict, word):
       actualWord = closeMatchMenu(difflib.get_close_matches(word, dict.keys()))
       retValue = checkKey(dict, actualWord)
     except:
-      traceback.print_exc()
-      retValue = '** ERROR: This word doesn\'t exist. Please check the word. **'
+      #traceback.print_exc()
+      raise Exception('** ERROR: This word doesn\'t exist. Please check the word. **')
   except:
     print("Unexpected error.")
   return retValue
@@ -72,8 +74,11 @@ def main():
     if word == ':exit':
       break
     else:
-      definitions = definition(data, word)
-      printDefinitions(definitions)
+      try:
+        definitions = definition(data, word)
+        printDefinitions(definitions)
+      except Exception as e:
+        print(e)
 
 
 if __name__ == '__main__': main()
