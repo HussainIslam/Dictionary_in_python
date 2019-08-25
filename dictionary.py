@@ -10,21 +10,43 @@ def printDefinitions(wordList):
     print(f'* {i}')
   print()
 
+def menuInput(wordList):
+  choice = input('Enter your choice: ')
+  try:
+    choice = int(choice) - 1
+    if choice < 0 or choice > len(wordList):
+      raise IndexError('Choice entered does not exists. Enter a valid choice.')
+    choice = wordList[choice]
+  except TypeError:
+    try:
+      choice = checkList(wordList, choice)
+    except KeyError:
+      raise KeyError('Word entered is not found in the list of options.')
+  return choice
+
 def closeMatchMenu(wordList):
   counter = 1
   for i in wordList:
     print(f'{counter}: {i}')
     counter = counter + 1
-  choice = input('Enter your choice: ')
-  return wordList[int(choice) - 1]
+  return menuInput(wordList)
 
 def checkKey(dict, word):
   value = ''
-  for i in dict.keys():
-    if i.lower() == word.lower():
-      value = dict[i]
-  if value == '':
+  try:
+    checkList(dict.keys(), word)
+    value = dict[word]
+  except KeyError:
     raise KeyError('Key not found in the dictionary')
+  return value
+
+def checkList(lst, word):
+  value = ''
+  for i in lst:
+    if i.lower() == word.lower():
+      value = i
+  if value == '':
+    raise KeyError('Key not found in the list')
   return value
 
 def definition(dict, word):
