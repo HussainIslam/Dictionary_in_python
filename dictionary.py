@@ -5,9 +5,9 @@ def loadData():
 
 def definition(dict, word):
   retValue = ''
-  if word in dict:
+  try:
     retValue = dict[word]
-  else:
+  except:
     retValue = 'This word doesn\'t exist. Please check the word.'
   return retValue
 
