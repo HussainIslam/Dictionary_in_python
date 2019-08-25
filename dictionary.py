@@ -11,18 +11,27 @@ def closeMatchMenu(wordList):
     print(f'{counter}: {i}')
     counter = counter + 1
   choice = input('Enter your choice: ')
-  return wordList[int(choice)-1]
+  return wordList[int(choice) - 1]
+
+def checkKey(dict, word):
+  value = ''
+  for i in dict.keys():
+    if i.lower() == word.lower():
+      value = dict[i]
+  if value == '':
+    raise KeyError('Key not found in the dictionary')
+  return value
 
 def definition(dict, word):
   retValue = ''
   try:
-    retValue = dict[word.lower()]
+    retValue = checkKey(dict, word)
   except KeyError:
     try:
-      closeMatches = difflib.get_close_matches(word, dict.keys())
-      actualWord = closeMatchMenu(closeMatches)
-      print(actualWord)
+      actualWord = closeMatchMenu(difflib.get_close_matches(word, dict.keys()))
+      print(checkKey(dict, actualWord))
     except:
+      traceback.print_exc()
       retValue = '** ERROR: This word doesn\'t exist. Please check the word. **'
   except:
     print("Unexpected error.")
