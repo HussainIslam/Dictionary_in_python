@@ -5,6 +5,11 @@ import difflib
 def loadData():
   return json.load(open('data.json'))
 
+def printDefinitions(wordList):
+  for i in wordList:
+    print(f'* {i}')
+  print()
+
 def closeMatchMenu(wordList):
   counter = 1
   for i in wordList:
@@ -29,7 +34,7 @@ def definition(dict, word):
   except KeyError:
     try:
       actualWord = closeMatchMenu(difflib.get_close_matches(word, dict.keys()))
-      print(checkKey(dict, actualWord))
+      retValue = checkKey(dict, actualWord)
     except:
       traceback.print_exc()
       retValue = '** ERROR: This word doesn\'t exist. Please check the word. **'
@@ -45,7 +50,8 @@ def main():
     if word == ':exit':
       break
     else:
-      print(definition(data, word))
+      definitions = definition(data, word)
+      printDefinitions(definitions)
 
 
 if __name__ == '__main__': main()
