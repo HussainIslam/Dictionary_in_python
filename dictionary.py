@@ -6,9 +6,9 @@ def loadData():
 def definition(dict, word):
   retValue = ''
   try:
-    retValue = dict[word]
+    retValue = dict[word.lower()]
   except:
-    retValue = 'This word doesn\'t exist. Please check the word.'
+    retValue = '** ERROR: This word doesn\'t exist. Please check the word. **'
   return retValue
 
 def main():
