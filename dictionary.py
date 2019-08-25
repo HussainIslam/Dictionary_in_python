@@ -10,6 +10,8 @@ def closeMatchMenu(wordList):
   for i in wordList:
     print(f'{counter}: {i}')
     counter = counter + 1
+  choice = input('Enter your choice: ')
+  return wordList[int(choice)-1]
 
 def definition(dict, word):
   retValue = ''
@@ -18,7 +20,8 @@ def definition(dict, word):
   except KeyError:
     try:
       closeMatches = difflib.get_close_matches(word, dict.keys())
-      closeMatchMenu(closeMatches)
+      actualWord = closeMatchMenu(closeMatches)
+      print(actualWord)
     except:
       retValue = '** ERROR: This word doesn\'t exist. Please check the word. **'
   except:
