@@ -16,3 +16,6 @@ The application works in the following way:
 This application does the following:
 * Displays the definitions of a word
 * Keeps asking the user for another words until the user types ':exit'
+
+## Screenshot
+![Image](https://github.com/HussainIslam/Dictionary_in_python/blob/master/Screenshot.JPG)
